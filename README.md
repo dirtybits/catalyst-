@@ -1,4 +1,4 @@
-This is the reference code for [CryptoNote](https://cryptonote.org) cryptocurrency protocol.
+This is the reference code for the [CryptoNote](https://cryptonote.org) cryptocurrency protocol.
 
 * Launch your own CryptoNote currency: [CryptoNote Starter](https://cryptonotestarter.org/)
 * CryptoNote reference implementation: [CryptoNoteCoin](https://cryptonote-coin.org)
@@ -41,7 +41,7 @@ set_property(TARGET daemon PROPERTY OUTPUT_NAME "furiouscoind")
 
 **1. Total money supply** (src/CryptoNoteConfig.h)
 
-Total amount of coins to be emitted. Most of CryptoNote based coins use `(uint64_t)(-1)` (equals to 18446744073709551616). You can define number explicitly (for example `UINT64_C(858986905600000000)`).
+Total amount of coins to be emitted. Most CryptoNote based coins use `(uint64_t)(-1)` (equals to 18446744073709551616). You can define number explicitly (for example `UINT64_C(858986905600000000)`).
 
 Example:
 ```
@@ -50,7 +50,7 @@ const uint64_t MONEY_SUPPLY = (uint64_t)(-1);
 
 **2. Emission curve** (src/CryptoNoteConfig.h)
 
-Be default CryptoNote provides emission formula with slight decrease of block reward with each block. This is different from Bitcoin where block reward halves every 4 years.
+By default CryptoNote provides an emission formula with a slight decrease of block reward with each block. This is different from Bitcoin where block reward halves every 4 years.
 
 `EMISSION_SPEED_FACTOR` constant defines emission curve slope. This parameter is required to calulate block reward. 
 
@@ -78,7 +78,7 @@ const uint64_t DIFFICULTY_TARGET = 120;
 
 **4. Block reward formula**
 
-In case you are not satisfied with CryptoNote default implementation of block reward logic you can also change it. The implementation is in `src/CryptoNoteCore/Currency.cpp`:
+If you are not satisfied with CryptoNote default implementation of block reward logic you can change it. The implementation is in `src/CryptoNoteCore/Currency.cpp`:
 ```
 bool Currency::getBlockReward(size_t medianSize, size_t currentBlockSize, uint64_t alreadyGeneratedCoins, uint64_t fee, uint64_t& reward, int64_t& emissionChange) const
 ```
