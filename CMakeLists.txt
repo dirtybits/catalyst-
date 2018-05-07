@@ -51,6 +51,7 @@ else()
   else()
     set(ARCH_FLAG "-march=${ARCH}")
   endif()
+  # below from https://github.com/valiant1x/intensecoin/commit/e54a8602703926ea456a73d2e9e1f7ae8076ff92
   set(WARNINGS "-Wall -Wextra -Wpointer-arith -Wundef -Wvla -Wwrite-strings -Werror -Wno-error=extra -Wimplicit-fallthrough=2 -Wno-error=init-self -Wno-error=format-truncation -Wno-error=terminate -Wno-error=unused-const-variable -Wno-error=logical-op -Wno-error=sign-compare -Wno-error=unused-variable -Wno-error=unused-function -Wno-error=deprecated-declarations -Wno-error=sign-compare -Wno-error=strict-aliasing -Wno-error=type-limits -Wno-unused-parameter -Wno-error=unused-variable -Wno-error=undef -Wno-error=uninitialized -Wno-error=unused-result")
   # set(WARNINGS "-Wall -Wextra -Wpointer-arith -Wundef -Wvla -Wwrite-strings -Werror -Wno-error=extra -Wno-error=unused-function -Wno-error=deprecated-declarations -Wno-error=sign-compare -Wno-error=strict-aliasing -Wno-error=type-limits -Wno-unused-parameter -Wno-error=unused-variable -Wno-error=undef -Wno-error=uninitialized -Wno-error=unused-result")
   if(CMAKE_C_COMPILER_ID STREQUAL "Clang")
