@@ -205,12 +205,12 @@ Recompile everything again. Your coin code is ready now. Make an announcement fo
 
 ### On *nix
 
-Dependencies: GCC 4.7.3 or later, CMake 2.8.6 or later, and Boost 1.55.
+Dependencies: GCC 4.7.3 or later, CMake 2.8.6 or later, and Boost 1.55. (download make as well, on server)
 
 You may download them from:
 
 * http://gcc.gnu.org/     (apt install gcc)
-* http://www.cmake.org/  (apt install cmake) or (sudo pacman -S cmake)
+* http://www.cmake.org/  (apt install cmake) or (sudo pacman -S cmake) 
 * http://www.boost.org/ (sudo apt-get install libboost-all-dev) or (sudo pacman -S boost)
 * Alternatively, it may be possible to install them using a package manager.
 
