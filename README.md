@@ -209,9 +209,9 @@ Dependencies: GCC 4.7.3 or later, CMake 2.8.6 or later, and Boost 1.55.
 
 You may download them from:
 
-* http://gcc.gnu.org/
-* http://www.cmake.org/
-* http://www.boost.org/
+* http://gcc.gnu.org/     (apt install gcc)
+* http://www.cmake.org/  (apt install cmake) or (sudo pacman -S cmake)
+* http://www.boost.org/ (sudo apt-get install libboost-all-dev) or (sudo pacman -S boost)
 * Alternatively, it may be possible to install them using a package manager.
 
 To build, change to a directory where this file is located, and run `make`. The resulting executables can be found in `build/release/src`.
