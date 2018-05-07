@@ -166,7 +166,7 @@ const uint64_t CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX = 0xe9; // addresses star
 
 ### Sixth step. Genesis block
 
-**1. Build the binaries with blank genesis tx hex** (src/CryptoNoteConfig.h)
+**1. Build the binaries with blank genesis tx hex** (src/CryptoNoteConfig.h) (I used cmake, boost, gcc)
 
 You should leave `const char GENESIS_COINBASE_TX_HEX[]` blank and compile the binaries without it.
 
