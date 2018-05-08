@@ -25,4 +25,3 @@ void tree_hash_from_branch(const unsigned char (*branch)[HASH_SIZE], size_t dept
 #if defined(__cplusplus)
 }}
 #endif
-
