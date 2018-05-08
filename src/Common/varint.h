@@ -127,15 +127,4 @@ namespace tools {
     return read_varint<std::numeric_limits<T>::digits, InputIt, T>(std::move(first), std::move(last), i);
   }
 }
-© 2018 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-API
-Training
-Shop
-Blog
-About
+
