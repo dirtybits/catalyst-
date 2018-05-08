@@ -1,6 +1,6 @@
-// Copyright (c) 2011-2016 The Cryptonote developers
-// Distributed under the MIT/X11 software license, see the accompanying
-// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
+// Copyright (c) 2012-2018, The CryptoNote developers, The Bytecoin developers.
+// Licensed under the GNU Lesser General Public License. See LICENSE for details.
 
 #pragma once
 
@@ -8,4 +8,14 @@
 #include <stddef.h>
 #endif
 
-void generate_random_bytes(size_t n, void *result);
+#if defined(__cplusplus)
+namespace crypto { extern "C" {
+#endif
+
+void unsafe_generate_random_bytes(size_t n, void *result); // Not thread-safe
+void initialize_random(void);
+void initialize_random_for_tests(void);
+
+#if defined(__cplusplus)
+}}
+#endif
