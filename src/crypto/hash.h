@@ -34,7 +34,7 @@
 #include <iostream>
 #include <boost/utility/value_init.hpp>
 
-#include "common/pod-class.h"
+#include "Common/pod-class.h" // might need to change 'Common' to 'common'
 #include "generic-ops.h"
 #include "hex.h"
 #include "span.h"
