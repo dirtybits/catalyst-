@@ -1,9 +1,10 @@
 // Copyright (c) 2012-2018, The CryptoNote developers, The Bytecoin developers.
+// Copyright (c) 2018 The Catalyst project.
 // Licensed under the GNU Lesser General Public License. See LICENSE for details.
 
 #pragma once
 
-// Including this header should fix problem building on Arch Linux
+// Including this header fixes "error: unknown type name ‘size_t’" problem building on Arch Linux
 #include <stddef.h>
 
 
