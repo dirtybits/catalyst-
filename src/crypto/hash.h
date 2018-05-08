@@ -1,98 +1,61 @@
-// Copyright (c) 2014-2018, The Monero Project
-// 
-// All rights reserved.
-// 
-// Redistribution and use in source and binary forms, with or without modification, are
-// permitted provided that the following conditions are met:
-// 
-// 1. Redistributions of source code must retain the above copyright notice, this list of
-//    conditions and the following disclaimer.
-// 
-// 2. Redistributions in binary form must reproduce the above copyright notice, this list
-//    of conditions and the following disclaimer in the documentation and/or other
-//    materials provided with the distribution.
-// 
-// 3. Neither the name of the copyright holder nor the names of its contributors may be
-//    used to endorse or promote products derived from this software without specific
-//    prior written permission.
-// 
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
-// EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-// MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
-// THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-// STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
-// THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// 
-// Parts of this file are originally copyright (c) 2012-2013 The Cryptonote developers
+// Copyright (c) 2012-2018, The CryptoNote developers, The Bytecoin developers.
+// Licensed under the GNU Lesser General Public License. See LICENSE for details.
 
 #pragma once
 
 #include <stddef.h>
-#include <iostream>
-#include <boost/utility/value_init.hpp>
 
-#include "Common/pod-class.h" // might need to change 'Common' to 'common'
-#include "generic-ops.h"
-#include "hex.h"
-#include "span.h"
+#include "hash-ops.h"
+#include "types.hpp"
 
 namespace crypto {
+// Cryptonight hash functions
 
-  extern "C" {
-#include "hash-ops.h"
-  }
+inline Hash cn_fast_hash(const void *data, size_t length) {
+	Hash h;
+	cn_fast_hash(data, length, h.data);
+	return h;
+}
+//	inline Hash cn_fast_hash(const std::vector<uint8_t> & data) {
+//		return cn_fast_hash(data.data(), data.size());
+//	}
 
-#pragma pack(push, 1)
-  POD_CLASS hash {
-    char data[HASH_SIZE];
-  };
-  POD_CLASS hash8 {
-    char data[8];
-  };
-#pragma pack(pop)
+class CryptoNightContext {
+public:
+	CryptoNightContext();
+	~CryptoNightContext();
 
-  static_assert(sizeof(hash) == HASH_SIZE, "Invalid structure size");
-  static_assert(sizeof(hash8) == 8, "Invalid structure size");
+	CryptoNightContext(const CryptoNightContext &) = delete;
+	void operator=(const CryptoNightContext &) = delete;
 
-  /*
-    Cryptonight hash functions
-  */
+	inline void cn_slow_hash(const void *src_data, size_t length, unsigned char *hash) {
+		crypto::cn_slow_hash(data, src_data, length, hash);
+	}
+	inline Hash cn_slow_hash(const void *src_data, size_t length) {
+		Hash hash;
+		crypto::cn_slow_hash(data, src_data, length, hash.data);
+		return hash;
+	}
 
-  inline void cn_fast_hash(const void *data, std::size_t length, hash &hash) {
-    cn_fast_hash(data, length, reinterpret_cast<char *>(&hash));
-  }
+private:
+	void *data;
+};
 
-  inline hash cn_fast_hash(const void *data, std::size_t length) {
-    hash h;
-    cn_fast_hash(data, length, reinterpret_cast<char *>(&h));
-    return h;
-  }
-
-  inline void cn_slow_hash(const void *data, std::size_t length, hash &hash, int variant = 0) {
-    cn_slow_hash(data, length, reinterpret_cast<char *>(&hash), variant, 0/*prehashed*/);
-  }
-
-  inline void cn_slow_hash_prehashed(const void *data, std::size_t length, hash &hash, int variant = 0) {
-    cn_slow_hash(data, length, reinterpret_cast<char *>(&hash), variant, 1/*prehashed*/);
-  }
-
-  inline void tree_hash(const hash *hashes, std::size_t count, hash &root_hash) {
-    tree_hash(reinterpret_cast<const char (*)[HASH_SIZE]>(hashes), count, reinterpret_cast<char *>(&root_hash));
-  }
-
-  inline std::ostream &operator <<(std::ostream &o, const crypto::hash &v) {
-    epee::to_hex::formatted(o, epee::as_byte_span(v)); return o;
-  }
-  inline std::ostream &operator <<(std::ostream &o, const crypto::hash8 &v) {
-    epee::to_hex::formatted(o, epee::as_byte_span(v)); return o;
-  }
-
-  const static crypto::hash null_hash = boost::value_initialized<crypto::hash>();
-  const static crypto::hash8 null_hash8 = boost::value_initialized<crypto::hash8>();
+inline Hash tree_hash(const Hash *hashes, size_t count) {
+	Hash root_hash;
+	tree_hash(reinterpret_cast<const unsigned char(*)[HASH_SIZE]>(hashes), count, root_hash.data);
+	return root_hash;
 }
 
-CRYPTO_MAKE_HASHABLE(hash)
-CRYPTO_MAKE_COMPARABLE(hash8)
+inline void tree_branch(const Hash *hashes, size_t count, Hash *branch) {
+	tree_branch(reinterpret_cast<const unsigned char(*)[HASH_SIZE]>(hashes), count,
+	    reinterpret_cast<unsigned char(*)[HASH_SIZE]>(branch));
+}
+
+inline Hash tree_hash_from_branch(const Hash *branch, size_t depth, const Hash &leaf, const void *path) {
+	Hash root_hash;
+	tree_hash_from_branch(
+	    reinterpret_cast<const unsigned char(*)[HASH_SIZE]>(branch), depth, leaf.data, path, root_hash.data);
+	return root_hash;
+}
+}
