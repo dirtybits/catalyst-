@@ -20,3 +20,4 @@ void cn_fast_hash(const void *data, size_t length, unsigned char *hash) {
   union hash_state state;
   hash_process(&state, data, length);
   memcpy(hash, &state, HASH_SIZE);
+}
