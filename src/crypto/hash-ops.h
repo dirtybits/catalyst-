@@ -3,6 +3,10 @@
 
 #pragma once
 
+// Including this header should fix problem building on Arch Linux
+#include <stddef.h>
+
+
 #if defined(__cplusplus)
 namespace crypto { extern "C" {
 #endif
