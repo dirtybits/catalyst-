@@ -314,16 +314,30 @@ namespace Crypto {
 #ifdef _MSC_VER
 #pragma warning(disable: 4200)
 #endif
+  
+  // From Monero Project
+  struct ec_point_pair {
+    ec_point a, b;
+  };
+  
 
   struct rs_comm {
+    /* original statment, remove if no longer necessary
     Hash h;
     struct {
       EllipticCurvePoint a, b;
     } ab[];
+    */
+    // From Monero Project
+    struct ec_point_pair ab[];
   };
 
   static inline size_t rs_comm_size(size_t pubs_count) {
-    return sizeof(rs_comm) + pubs_count * sizeof(rs_comm().ab[0]);
+    // original statement, remove if no longer necessary
+    // return sizeof(rs_comm) + pubs_count * sizeof(rs_comm().ab[0]);
+    // From Monero Project
+    return sizeof(rs_comm) + pubs_count * sizeof(ec_point_pair);
+
   }
 
   void crypto_ops::generate_ring_signature(const Hash &prefix_hash, const KeyImage &image,
