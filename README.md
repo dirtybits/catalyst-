@@ -1,3 +1,6 @@
+
+The original Catalyst implementation that never came to fruition, here for historical purposes [2019-01-27]
+
 This is the reference code for the [CryptoNote](https://cryptonote.org) cryptocurrency protocol, being used to implement Catalyst.
 
 * Launch your own CryptoNote currency: [CryptoNote Starter](https://cryptonotestarter.org/)
